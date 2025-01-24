@@ -89,10 +89,18 @@ function window_get_visible()
 ///			 </returns>
 // #############################################################################################
 function window_set_fullscreen(_full) {
-/*	if (g_FullScreen == _full) return;
-	g_ToggleFullscreen = true;
-	if( _full ) RememberCanvasSettings();
-*/
+	let full_curr = window_get_fullscreen();
+	if (full_curr == _full) return;
+
+	if (_full) {
+		document.documentElement.requestFullscreen().catch(err => {
+			console.error("Fullscreen request failed:", err);
+		});
+	} else {
+		document.exitFullscreen().catch(err => {
+			console.error("Exit fullscreen failed:", err);
+		});
+	}
 }
 
 
